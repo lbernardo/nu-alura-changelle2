@@ -1,60 +1,62 @@
-(ns cartao.db)
+(ns cartao.db
+  (:require [datomic.api :as d]))
+
+(def database-uri "datomic:dev://localhost:4334/cartao")
+
+(def schema [{:db/ident       :account/name
+              :db/valueType   :db.type/string
+              :db/cardinality :db.cardinality/one
+              :db/doc         "Client name"
+              }
+             {:db/ident       :account/email
+              :db/valueType   :db.type/string
+              :db/cardinality :db.cardinality/one
+              :db/doc         "Client email"
+              }
+             {:db/ident       :account/cpf
+              :db/valueType   :db.type/string
+              :db/cardinality :db.cardinality/one
+              :db/doc         "Client CPF"
+              }
+             {:db/ident       :creditcard/number
+              :db/valueType   :db.type/string
+              :db/cardinality :db.cardinality/one
+              :db/doc         "Creditcard number"
+              }
+             {:db/ident       :creditcard/cvv
+              :db/valueType   :db.type/string
+              :db/cardinality :db.cardinality/one
+              :db/doc         "Creditcard cvv"
+              }
+             {:db/ident       :creditcard/duedade
+              :db/valueType   :db.type/string
+              :db/cardinality :db.cardinality/one
+              :db/doc         "Creditcard duedate"
+              }
+             {:db/ident       :creditcard/limit
+              :db/valueType   :db.type/long
+              :db/cardinality :db.cardinality/one
+              :db/doc         "Creditcard limit"
+              }
+             ]
+  )
 
 
-(def cartao {
-             :client     {
-                          :name  "Gabriela Lima"
-                          :cpf   "54946824049"
-                          :email "gabriela.lima123@getnada.com"
-                          }
-             :creditcard {
-                          :number  "5375 3367 8066 2486"
-                          :duedate "11/2022"
-                          :ccv     672
-                          :limit   3000
-                          }
-             :purshases  [
-                          {
-                           :date          "2021-01-01"
-                           :value         25.00
-                           :establishment "Casa das coxinhas"
-                           :category-id   :food
-                           :category      "Food"
-                           }
-                          {
-                           :date          "2021-01-01"
-                           :value         120.00
-                           :establishment "ABC Drugstore"
-                           :category-id   :drugstore
-                           :category      "Drugstore"
-                           }
-                          {
-                           :date          "2021-01-01"
-                           :value         25.00
-                           :establishment "Casa das coxinhas"
-                           :category-id   :food
-                           :category      "Food"
-                           }
-                          {
-                           :date          "2021-01-01"
-                           :value         300.00
-                           :establishment "Magalu"
-                           :category-id   :mall
-                           :category      "Mall"
-                           }
-                          {
-                           :date          "2021-01-01"
-                           :value         1236.90
-                           :establishment "Ponto"
-                           :category-id   :mall
-                           :category      "Mall"
-                           }
-                          {
-                           :date          "2021-01-01"
-                           :value         15.0
-                           :establishment "ABC Drugstore"
-                           :category-id   :drugstore
-                           :category      "Drugstore"
-                           }
-                          ]
-             })
+(defn create-database []
+  (d/create-database database-uri))
+
+(defn connect []
+  (d/connect database-uri))
+
+(defn create-database-and-connect []
+  (create-database)
+  (connect))
+
+(defn create-schema [conn]
+  (d/transact conn schema))
+
+(defn delete-database []
+  (d/delete-database database-uri))
+
+(defn get-snapshot [conn]
+  (d/db conn))
