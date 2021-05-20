@@ -38,6 +38,33 @@
               :db/cardinality :db.cardinality/one
               :db/doc         "Creditcard limit"
               }
+
+             {:db/ident       :purchase/date
+              :db/valueType   :db.type/instant
+              :db/cardinality :db.cardinality/many
+              :db/doc         "Purchase date"
+              }
+             {:db/ident       :purchase/establishment
+              :db/valueType   :db.type/string
+              :db/cardinality :db.cardinality/many
+              :db/doc         "Purchase establishment"
+              }
+             {:db/ident       :purchase/category
+              :db/valueType   :db.type/string
+              :db/cardinality :db.cardinality/many
+              :db/doc         "Purchase category"
+              }
+             {
+              :db/ident       :purchase/category-id
+              :db/valueType   :db.type/keyword
+              :db/cardinality :db.cardinality/many
+              :db/doc         "Category ID"
+              }
+             {:db/ident       :purchase/amount
+              :db/valueType   :db.type/bigdec
+              :db/cardinality :db.cardinality/many
+              :db/doc         "Purchase amount"
+              }
              ]
   )
 

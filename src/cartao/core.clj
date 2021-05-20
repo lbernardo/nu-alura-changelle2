@@ -3,7 +3,7 @@
             [cartao.ports.primary.cli :as c.cli]
             [cartao.controller :as c.controller]))
 
-(c.db/delete-database)
+(c.db/delete-database)                                      ; TODO: remove line
 (def conn (c.db/create-database-and-connect))               ; create database and connect
 (c.db/create-schema conn)                                   ; create schema
 (c.controller/config conn)                                  ; create account default
